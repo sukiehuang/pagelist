@@ -51,9 +51,10 @@ PageList.prototype={
                 _self.curPage--;
             }
             _self.callback.call(this,this.curPage);
+            _self.init();
             console.log(_self.curPage);
-        }
 
+        }
     },
     nextpage: function () {
         var _self=this;
@@ -67,9 +68,9 @@ PageList.prototype={
                 _self.curPage++;
             }
             _self.callback.call(this,this.curPage);
+            _self.init();
             console.log(_self.curPage);
         }
-
     },
     pagenum: function () {
         var _self=this;
@@ -81,24 +82,31 @@ PageList.prototype={
             this.pageContentID.appendChild(_self._num);
             _self._num.onclick= function () {
                 var curpage = $(this).text();
-                //$(this).children("a").addClass("navcur");
                 _self.gotopage(curpage);
+
             }
         }
+        $(".pagination li").each(function(){
+            if($(this)[0].innerText==_self.curPage){
+                $(".pagination li").children("a").removeClass("navcur");
+                $(this).children("a").addClass("navcur");
+            }
+        });
 
     },
     gotopage: function (curpage) {
         this.curPage=curpage;
         this.callback.call(this,this.curPage);
+        this.init();
         console.log(this.curPage);
     },
     renderbtn: function () {
+        $(".pagination").html("");
         this.firstpage();
         this.prewpage();
         this.pagenum();
         this.nextpage();
         this.lastpage();
-
     }
 };
 $(function(){
