@@ -19,6 +19,6 @@ var pagetest = new PageList("pageDIV",{
 pagetest.init();
 
 欠缺功能:
-1.显示当前页数的点击样式
+1.显示当前页数的点击样式(已添加-2015/2/6)
 2.分页数过多显示优化
 (完善中...)
