@@ -1,5 +1,5 @@
 # pagelist
-分页组件---完善中....
+分页组件
 
 这是基于JS的分页组件,通过构造函数PageList并且传入参数构造属性配置.
   @pageContentID 渲染分页的DIV元素
@@ -18,7 +18,3 @@ var pagetest = new PageList("pageDIV",{
 
 pagetest.init();
 
-欠缺功能:
-1.显示当前页数的点击样式(已添加-2015/2/6)
-2.分页数过多显示优化
-(完善中...)
