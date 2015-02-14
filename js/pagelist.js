@@ -74,16 +74,76 @@ PageList.prototype={
     },
     pagenum: function () {
         var _self=this;
-        for(var i= 1,len=this.pageSize;i<=len;i++){
-            _self._num=document.createElement("li");
-            _self._numA=document.createElement("a");
-            _self._numA.innerHTML=i;
-            _self._num.appendChild(_self._numA);
-            this.pageContentID.appendChild(_self._num);
-            _self._num.onclick= function () {
-                var curpage = $(this).text();
-                _self.gotopage(curpage);
+        if(this.pageSize<=10){
+            for(var i= 1,len=this.pageSize;i<=len;i++){
+                _self._num=document.createElement("li");
+                _self._numA=document.createElement("a");
+                _self._numA.innerHTML=i;
+                _self._num.appendChild(_self._numA);
+                this.pageContentID.appendChild(_self._num);
+                _self._num.onclick= function () {
+                    var curpage = $(this).text();
+                    _self.gotopage(curpage);
+                }
+            }
+        }
+        else{
+            if(_self.curPage<=10){
+                for(var i= 1;i<=10;i++){
+                    _self._num=document.createElement("li");
+                    _self._numA=document.createElement("a");
+                    _self._numA.innerHTML=i;
+                    _self._num.appendChild(_self._numA);
+                    this.pageContentID.appendChild(_self._num);
+                    _self._num.onclick= function () {
+                        var curpage = $(this).text();
+                        _self.gotopage(curpage);
+                    }
+                }
+            }
+            else if(_self.curPage>10&&_self.curPage<=this.pageSize){
+                if(this.pageSize<Math.ceil(_self.curPage/10)*10){
+                    for(var i=Math.floor(_self.curPage/10)*10+1;i<=this.pageSize;i++){
+                        if(_self.curPage>this.pageSize)
+                        return;
+                        _self._num=document.createElement("li");
+                        _self._numA=document.createElement("a");
+                        _self._numA.innerHTML=i;
+                        _self._num.appendChild(_self._numA);
+                        this.pageContentID.appendChild(_self._num);
+                        _self._num.onclick= function () {
+                            var curpage = $(this).text();
+                            _self.gotopage(curpage);
+                        }
+                    }
+                }else{
+                    if(Math.ceil(_self.curPage/10)*10==_self.curPage){
+                        for(var i=_self.curPage-9;i<=_self.curPage;i++){
+                            _self._num=document.createElement("li");
+                            _self._numA=document.createElement("a");
+                            _self._numA.innerHTML=i;
+                            _self._num.appendChild(_self._numA);
+                            this.pageContentID.appendChild(_self._num);
+                            _self._num.onclick= function () {
+                                var curpage = $(this).text();
+                                _self.gotopage(curpage);
+                            }
+                        }
+                    }else{
+                        for(var i=Math.floor(_self.curPage/10)*10+1;i<=Math.ceil(_self.curPage/10)*10;i++){
+                            _self._num=document.createElement("li");
+                            _self._numA=document.createElement("a");
+                            _self._numA.innerHTML=i;
+                            _self._num.appendChild(_self._numA);
+                            this.pageContentID.appendChild(_self._num);
+                            _self._num.onclick= function () {
+                                var curpage = $(this).text();
+                                _self.gotopage(curpage);
+                            }
+                        }
+                    }
 
+                }
             }
         }
         $(".pagination li").each(function(){
@@ -110,15 +170,17 @@ PageList.prototype={
     }
 };
 $(function(){
+    //初始化
     var pager = new PageList("pageDIV",{
         curPage:1,
-        totalCount:100,
-        pageRows:9,
+        totalCount:26,
+        pageRows:1,
         callback:callbackFuc
     });
     pager.init();
 });
 
+//回调函数
 function callbackFuc(curpage){
 
 }
